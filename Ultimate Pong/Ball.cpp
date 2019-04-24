@@ -92,6 +92,7 @@ void Ball::move() {
 		this->pos.y + this->radius > paddle1_ymin
 	) {
 		paddle1_left = true;
+		this->speed += 0.0001;
 	}
 	
 	if (
@@ -137,6 +138,7 @@ void Ball::move() {
 		this->pos.y + this->radius > paddle2_ymin
 		) {
 		paddle2_right = true;
+		this->speed += 0.0001;
 	}
 
 	if (
@@ -177,6 +179,7 @@ void Ball::reset() {
 	this->pos.x = 0;
 	this->pos.y = 0;
 	this->direction = 60;
+	this->speed = this->defaultSpeed;
 }
 
 bool Ball::isTravellingDown() {
