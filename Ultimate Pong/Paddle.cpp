@@ -24,19 +24,19 @@ Paddle::Paddle(bool isArrowKeys) {
 
 void Paddle::moveUp() {
 	if (bufferData[5] < 1 /* top y-coord */) {
-		bufferData[1] += 0.0004;
-		bufferData[3] += 0.0004;
-		bufferData[5] += 0.0004;
-		bufferData[7] += 0.0004;
+		bufferData[1] += this->speed;
+		bufferData[3] += this->speed;
+		bufferData[5] += this->speed;
+		bufferData[7] += this->speed;
 	}
 }
 
 void Paddle::moveDown() {
 	if (bufferData[1] > -1 /* bottom y-coord */) {
-		bufferData[1] -= 0.0004;
-		bufferData[3] -= 0.0004;
-		bufferData[5] -= 0.0004;
-		bufferData[7] -= 0.0004;
+		bufferData[1] -= this->speed;
+		bufferData[3] -= this->speed;
+		bufferData[5] -= this->speed;
+		bufferData[7] -= this->speed;
 	}
 }
 
@@ -46,4 +46,16 @@ bool Paddle::isUsingArrowKeys() {
 
 GLfloat* Paddle::getBufferData() {
 	return bufferData;
+}
+
+float Paddle::getSpeed() {
+	return this->speed;
+}
+
+void Paddle::setSpeed(float speed) {
+	this->speed = speed;
+}
+
+void Paddle::reset() {
+	this->speed = this->defaultSpeed;
 }

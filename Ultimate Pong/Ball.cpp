@@ -4,15 +4,17 @@
 #include <iostream>
 #include <math.h>
 #include <ctime>
+#include "Window.h"
 #include <random>
 
 #define PI 3.14159265
 
-Ball::Ball(Paddle* paddle1, Paddle* paddle2) {
+Ball::Ball(Window* window, Paddle* paddle1, Paddle* paddle2) {
 	this->pos.x = 0.0;
 	this->pos.y = 0.0;
 	this->paddle1 = paddle1;
 	this->paddle2 = paddle2;
+	this->window = window;
 
 	this->updateBuffer();
 }
@@ -74,8 +76,14 @@ void Ball::move() {
 	}
 
 	if (left_wall || right_wall) {
-		//direction = 180 - direction;
 		this->reset();
+	}
+
+	if (left_wall) {
+		this->window->addRight();
+	}
+	else if (right_wall) {
+		this->window->addLeft();
 	}
 
 	// Right paddle
@@ -95,6 +103,8 @@ void Ball::move() {
 	) {
 		paddle1_left = true;
 		this->speed *= 1.15;
+		this->paddle1->setSpeed(this->paddle1->getSpeed() * 1.15);
+		this->paddle2->setSpeed(this->paddle2->getSpeed() * 1.15);
 	}
 	
 	if (
@@ -142,6 +152,8 @@ void Ball::move() {
 		) {
 		paddle2_right = true;
 		this->speed *= 1.15;
+		this->paddle1->setSpeed(this->paddle1->getSpeed() * 1.15);
+		this->paddle2->setSpeed(this->paddle2->getSpeed() * 1.15);
 	}
 
 	if (
@@ -184,6 +196,8 @@ void Ball::reset() {
 	this->pos.y = 0;
 	this->direction = 60;
 	this->speed = this->defaultSpeed;
+	this->paddle1->reset();
+	this->paddle2->reset();
 }
 
 bool Ball::isTravellingDown() {
