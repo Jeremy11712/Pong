@@ -119,11 +119,11 @@ int main(void)
 		// Ball
 		glBindVertexArray(ballID);
 		glBindBuffer(GL_ARRAY_BUFFER, ballBuffer);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * 720, ballVertices, GL_STATIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * 8, ballVertices, GL_STATIC_DRAW);
 		glEnableVertexAttribArray(ballPosAttrib);
 		glVertexAttribPointer(ballPosAttrib, 2, GL_FLOAT, GL_FALSE, 0, 0);
 		glUseProgram(ballProgram);
-		glDrawArrays(GL_TRIANGLE_FAN, 0, 360);
+		glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 		glDisableVertexAttribArray(0);
 
 		/////////////////////////////////////////////////////////////
@@ -133,6 +133,10 @@ int main(void)
 		// Swap buffers
 		glfwSwapBuffers(window);
 		glfwPollEvents();
+
+		// Move ball
+		ball.move();
+		printf("\n");
 
 	} // Check if the ESC key was pressed or the window was closed
 	while (glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS &&
