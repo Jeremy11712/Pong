@@ -102,6 +102,8 @@ void Ball::move() {
 	) {
 		paddle1_left = true;
 		this->speed *= 1.15;
+		this->paddle1->setSpeed(this->paddle1->getSpeed() * 1.15);
+		this->paddle2->setSpeed(this->paddle2->getSpeed() * 1.15);
 	}
 	
 	if (
@@ -149,6 +151,8 @@ void Ball::move() {
 		) {
 		paddle2_right = true;
 		this->speed *= 1.15;
+		this->paddle1->setSpeed(this->paddle1->getSpeed() * 1.15);
+		this->paddle2->setSpeed(this->paddle2->getSpeed() * 1.15);
 	}
 
 	if (
@@ -191,6 +195,8 @@ void Ball::reset() {
 	this->pos.y = 0;
 	this->direction = 60;
 	this->speed = this->defaultSpeed;
+	this->paddle1->reset();
+	this->paddle2->reset();
 }
 
 bool Ball::isTravellingDown() {
