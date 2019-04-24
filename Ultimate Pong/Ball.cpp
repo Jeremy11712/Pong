@@ -92,7 +92,7 @@ void Ball::move() {
 		this->pos.y + this->radius > paddle1_ymin
 	) {
 		paddle1_left = true;
-		this->speed += 0.0001;
+		this->speed *= 1.15;
 	}
 	
 	if (
@@ -138,7 +138,7 @@ void Ball::move() {
 		this->pos.y + this->radius > paddle2_ymin
 		) {
 		paddle2_right = true;
-		this->speed += 0.0001;
+		this->speed *= 1.15;
 	}
 
 	if (
