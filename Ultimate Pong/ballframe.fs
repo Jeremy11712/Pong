@@ -1,9 +1,9 @@
 #version 330 core
 
 // Ouput data
-out vec3 color;
+out vec4 color;
 
 void main()
 {
-	color = vec3(1,1,1); // white
+	color = vec4(1,1,1,1); // white
 }
