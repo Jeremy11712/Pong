@@ -3,6 +3,7 @@
 #include <glm\glm.hpp>
 #include <iostream>
 #include <math.h>
+#include <ctime>
 #include <random>
 
 #define PI 3.14159265
@@ -206,6 +207,7 @@ float Ball::getB() {
 }
 
 void Ball::randBallColor() {
+	srand(time(NULL));
 	float r = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
 	this->r = r;
 
