@@ -10,6 +10,7 @@ private:
 	bool arrowKeys;
 
 public:
+	Paddle();
 	Paddle(bool isArrowKeys);
 	void moveUp();
 	void moveDown();

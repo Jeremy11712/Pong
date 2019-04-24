@@ -3,7 +3,10 @@
 // Ouput data
 out vec4 color;
 
+// Input rgb
+uniform vec4 rgb;
+
 void main()
 {
-	color = vec4(1,1,1,1); // white
+	color = (rgb);
 }
