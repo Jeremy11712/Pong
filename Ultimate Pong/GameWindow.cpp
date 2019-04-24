@@ -93,6 +93,7 @@ int main(void)
 
 	player1 = new Paddle(true);
 	player2 = new Paddle(false);
+	Ball ball = Ball(player1, player2);
 
 	// Register key functions
 	glfwSetKeyCallback(window, registerPressedKeys);
@@ -118,9 +119,6 @@ int main(void)
 	glGenBuffers(1, &paddle2Buffer);
 	glGenBuffers(1, &ballBuffer);
 	
-	Paddle player1 = new Paddle(true);
-	Paddle player2 = new Paddle(false);
-	Ball ball = Ball();
 
 	/* Debug for cjh
 	GLfloat vertices[] = {
@@ -142,8 +140,8 @@ int main(void)
 		// Paddle Data:
 		GLint paddle1PosAttrib = glGetAttribLocation(paddle1Program, "position");
 		GLint paddle2PosAttrib = glGetAttribLocation(paddle2Program, "position");
-		GLfloat* paddle1Vertices = player1.getBufferData();
-		GLfloat* paddle2Vertices = player2.getBufferData();
+		GLfloat* paddle1Vertices = player1->getBufferData();
+		GLfloat* paddle2Vertices = player2->getBufferData();
 
 		// Player 1 Paddle
 		glBindVertexArray(paddle1ID);
@@ -196,7 +194,6 @@ int main(void)
 
 		// Move ball
 		ball.move();
-		printf("\n");
 
 	} // Check if the ESC key was pressed or the window was closed
 	while (glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS &&

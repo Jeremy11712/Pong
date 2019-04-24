@@ -1,5 +1,7 @@
 #include "Paddle.h"
 
+Paddle::Paddle() {}
+
 Paddle::Paddle(bool isArrowKeys) {
 	bl[0] = isArrowKeys ? 0.9 : -0.9;
 	bl[1] = isArrowKeys ? -0.2 : -0.2;
@@ -22,19 +24,19 @@ Paddle::Paddle(bool isArrowKeys) {
 
 void Paddle::moveUp() {
 	if (bufferData[5] < 1 /* top y-coord */) {
-		bufferData[1] += 0.01;
-		bufferData[3] += 0.01;
-		bufferData[5] += 0.01;
-		bufferData[7] += 0.01;
+		bufferData[1] += 0.0004;
+		bufferData[3] += 0.0004;
+		bufferData[5] += 0.0004;
+		bufferData[7] += 0.0004;
 	}
 }
 
 void Paddle::moveDown() {
 	if (bufferData[1] > -1 /* bottom y-coord */) {
-		bufferData[1] -= 0.01;
-		bufferData[3] -= 0.01;
-		bufferData[5] -= 0.01;
-		bufferData[7] -= 0.01;
+		bufferData[1] -= 0.0004;
+		bufferData[3] -= 0.0004;
+		bufferData[5] -= 0.0004;
+		bufferData[7] -= 0.0004;
 	}
 }
 

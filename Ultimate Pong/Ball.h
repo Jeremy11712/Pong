@@ -2,6 +2,7 @@
 #include <GL/glew.h>
 #include <GL/glut.h>
 #include <glm/glm.hpp>
+#include "Paddle.h"
 
 class Ball {
 
@@ -10,11 +11,14 @@ private:
 	glm::vec2 pos;
 	float radius = 0.04;
 	float direction = 60;
-	float speed = 0.0004;
+	float speed = 0.0003;
+	Paddle* paddle1;
+	Paddle* paddle2;
+	bool isTravellingDown();
 	void updateBuffer();
 
 public:
-	Ball();
+	Ball(Paddle* paddle1, Paddle* paddle2);
 	void move();
 	GLfloat* getBufferData();
 	void reset();
