@@ -26,6 +26,7 @@
 #include <chrono>
 
 GLFWwindow* window;
+Window gWindow;
 const GLuint WIDTH = 800, HEIGHT = 800;
 
 struct Character {
@@ -118,7 +119,7 @@ int main(void)
 	
 	player1 = new Paddle(true);
 	player2 = new Paddle(false);
-	Ball ball = Ball(player1, player2);
+	Ball ball = Ball(&gWindow, player1, player2);
 
 	// Register key functions
 	glfwSetKeyCallback(window, registerPressedKeys);
@@ -222,7 +223,7 @@ int main(void)
 	glGenBuffers(1, &paddle2Buffer);
 	glGenBuffers(1, &ballBuffer);
 
-	Window gWindow = Window();
+	gWindow = Window();
 	gWindow.startTime();
 	
 	// The program Loop
@@ -278,7 +279,7 @@ int main(void)
 		glUseProgram(ballProgram);
 
 		GLint rgb = glGetUniformLocation(ballProgram, "rgb");
-		glUniform3f(rgb, ball.getR(), ball.getG(), ball.getB()); 
+		glUniform4f(rgb, ball.getR(), ball.getG(), ball.getB(), 1.0); 
 		
 		glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 		glDisableVertexAttribArray(0);

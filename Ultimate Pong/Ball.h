@@ -3,6 +3,7 @@
 #include <GL/glut.h>
 #include <glm/glm.hpp>
 #include "Paddle.h"
+#include "Window.h"
 
 class Ball {
 
@@ -18,11 +19,12 @@ private:
 	float b = 1.0;
 	Paddle* paddle1;
 	Paddle* paddle2;
+	Window* window;
 	bool isTravellingDown();
 	void updateBuffer();
 
 public:
-	Ball(Paddle* paddle1, Paddle* paddle2);
+	Ball(Window* window, Paddle* paddle1, Paddle* paddle2);
 	void move();
 	GLfloat* getBufferData();
 	void reset();
@@ -30,4 +32,5 @@ public:
 	float getR();
 	float getG();
 	float getB();
+
 };

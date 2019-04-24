@@ -1,5 +1,6 @@
 #include "Ball.h"
 #include "Paddle.h"
+#include "Window.h"
 #include <glm\glm.hpp>
 #include <iostream>
 #include <math.h>
@@ -7,11 +8,12 @@
 
 #define PI 3.14159265
 
-Ball::Ball(Paddle* paddle1, Paddle* paddle2) {
+Ball::Ball(Window* window, Paddle* paddle1, Paddle* paddle2) {
 	this->pos.x = 0.0;
 	this->pos.y = 0.0;
 	this->paddle1 = paddle1;
 	this->paddle2 = paddle2;
+	this->window = window;
 
 	this->updateBuffer();
 }
@@ -73,8 +75,14 @@ void Ball::move() {
 	}
 
 	if (left_wall || right_wall) {
-		//direction = 180 - direction;
 		this->reset();
+	}
+
+	if (left_wall) {
+		this->window->addRight();
+	}
+	else if (right_wall) {
+		this->window->addLeft();
 	}
 
 	// Right paddle
