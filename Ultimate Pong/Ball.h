@@ -32,5 +32,4 @@ public:
 	float getR();
 	float getG();
 	float getB();
-
 };
