@@ -1,8 +1,9 @@
 #include "Ball.h"
+#include "Paddle.h"
 #include <glm\glm.hpp>
 #include <iostream>
 #include <math.h>
-#include "Paddle.h"
+#include <random>
 
 #define PI 3.14159265
 
@@ -120,6 +121,7 @@ void Ball::move() {
 
 	if (paddle1_left) {
 		this->direction = 180 - this->direction;
+		this->randBallColor();
 	}
 
 	// Left paddle
@@ -166,6 +168,7 @@ void Ball::move() {
 
 	if (paddle2_right) {
 		this->direction = 180 - this->direction;
+		this->randBallColor();
 	}
 
 	this->updateBuffer();
@@ -188,4 +191,27 @@ bool Ball::isTravellingDown() {
 	}
 
 	return this->direction - 180 > 0;
+}
+
+float Ball::getR() {
+	return r;
+}
+
+float Ball::getG() {
+	return g;
+}
+
+float Ball::getB() {
+	return b;
+}
+
+void Ball::randBallColor() {
+	float r = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+	this->r = r;
+
+	float g = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+	this->g = g;
+
+	float b = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+	this->b = b;
 }

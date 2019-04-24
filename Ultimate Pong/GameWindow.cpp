@@ -118,16 +118,6 @@ int main(void)
 	glGenBuffers(1, &paddle1Buffer);
 	glGenBuffers(1, &paddle2Buffer);
 	glGenBuffers(1, &ballBuffer);
-	
-
-	/* Debug for cjh
-	GLfloat vertices[] = {
-		-0.5, 0.5,
-		0.5, 0.5,
-		0.5, -0.5,
-		-0.5, -0.5
-	};
-	*/
 
 	// The program Loop
 	do {
@@ -146,7 +136,6 @@ int main(void)
 		// Player 1 Paddle
 		glBindVertexArray(paddle1ID);
 		glBindBuffer(GL_ARRAY_BUFFER, paddle1Buffer);
-		//std::cout << sizeof(vertices[0]) << std::endl;
 		glBufferData(GL_ARRAY_BUFFER, /* Change this back to sizeof(GLfloat*) */32, paddle1Vertices, GL_STATIC_DRAW);
 		glEnableVertexAttribArray(paddle1PosAttrib);
 		glVertexAttribPointer(paddle1PosAttrib, 2, GL_FLOAT, GL_FALSE, 0, 0);
@@ -179,7 +168,12 @@ int main(void)
 		glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * 8, ballVertices, GL_STATIC_DRAW);
 		glEnableVertexAttribArray(ballPosAttrib);
 		glVertexAttribPointer(ballPosAttrib, 2, GL_FLOAT, GL_FALSE, 0, 0);
+		
 		glUseProgram(ballProgram);
+
+		GLint rgb = glGetUniformLocation(ballProgram, "rgb");
+		glUniform3f(rgb, ball.getR(), ball.getG(), ball.getB()); 
+		
 		glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 		glDisableVertexAttribArray(0);
 
