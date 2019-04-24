@@ -18,6 +18,43 @@
 #include <chrono>
 
 GLFWwindow* window;
+Paddle* player1;
+Paddle* player2;
+const int KEY_CT = 349;
+bool keysPressed[KEY_CT];
+
+void registerPressedKeys(GLFWwindow* window, int key, int scancode, int action, int mods) {
+	std::cout << "test";
+	if (key == GLFW_KEY_UNKNOWN)
+		return;
+	if (action == GLFW_PRESS) {
+		keysPressed[key] = true;
+		std::cout << "key pressed = " << key << std::endl;
+	}
+	else if (action == GLFW_RELEASE) {
+		keysPressed[key] = false;
+		std::cout << "key released = " << key << std::endl;
+	}
+}
+
+void handleKeyEvent() {
+	for (int i = 0; i < KEY_CT; i++) {
+		if (keysPressed[i]) {
+			if (i == GLFW_KEY_UP) {
+				player1->moveUp();
+			}
+			else if (i == GLFW_KEY_W) {
+				player2->moveUp();
+			}
+			else if (i == GLFW_KEY_DOWN) {
+				player1->moveDown();
+			}
+			else if (i == GLFW_KEY_S) {
+				player2->moveDown();
+			}
+		}
+	}
+}
 
 int main(void)
 {
@@ -54,22 +91,31 @@ int main(void)
 		return -1;
 	}
 
+	player1 = new Paddle(true);
+	player2 = new Paddle(false);
+
+	// Register key functions
+	glfwSetKeyCallback(window, registerPressedKeys);
+
 	// Ensure we can capture the escape key being pressed below
 	glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
 
 	// Black background
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
-	GLuint paddle1ID, ballID;
+	GLuint paddle1ID, paddle2ID, ballID;
 	glGenVertexArrays(1, &paddle1ID);
+	glGenVertexArrays(1, &paddle2ID);
 	glGenVertexArrays(1, &ballID);
 
 	GLuint paddle1Program = LoadShaders("paddlevertex.vs", "paddleframe.fs");
+	GLuint paddle2Program = LoadShaders("paddlevertex.vs", "paddleframe.fs");
 	GLuint ballProgram = LoadShaders("ballvertex.vs", "ballframe.fs");
 
 	// 2) Create buffers
-	GLuint paddleBuffer, ballBuffer;
-	glGenBuffers(1, &paddleBuffer);
+	GLuint paddle1Buffer, paddle2Buffer, ballBuffer;
+	glGenBuffers(1, &paddle1Buffer);
+	glGenBuffers(1, &paddle2Buffer);
 	glGenBuffers(1, &ballBuffer);
 	
 	Paddle player1 = new Paddle(true);
@@ -84,29 +130,42 @@ int main(void)
 		-0.5, -0.5
 	};
 	*/
-	
+
 	// The program Loop
 	do {
 
 		// Clear the screen
 		glClear(GL_COLOR_BUFFER_BIT);
-		
+
 
 		//////////////////////////////////////////////
 		// Paddle Data:
-		// GLint paddle1PosAttrib = glGetAttribLocation(paddle1Program, "position");
-		// GLfloat* paddle1Vertices = player1.getBufferData();
+		GLint paddle1PosAttrib = glGetAttribLocation(paddle1Program, "position");
+		GLint paddle2PosAttrib = glGetAttribLocation(paddle2Program, "position");
+		GLfloat* paddle1Vertices = player1.getBufferData();
+		GLfloat* paddle2Vertices = player2.getBufferData();
 
-		// // Player 1 Paddle
-		// glBindVertexArray(paddle1ID);
-		// glBindBuffer(GL_ARRAY_BUFFER, paddleBuffer);
-		// // std::cout << sizeof(paddle1Vertices[0]) << std::endl;
-		// glBufferData(GL_ARRAY_BUFFER, /* Change this back to sizeof(GLfloat*) */32, paddle1Vertices, GL_STATIC_DRAW);
-		// glEnableVertexAttribArray(paddle1PosAttrib);
-		// glVertexAttribPointer(paddle1PosAttrib, 2, GL_FLOAT, GL_FALSE, 0, 0);
-		// glUseProgram(paddle1Program);
-		// glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
-		// glDisableVertexAttribArray(paddle1PosAttrib);
+		// Player 1 Paddle
+		glBindVertexArray(paddle1ID);
+		glBindBuffer(GL_ARRAY_BUFFER, paddle1Buffer);
+		//std::cout << sizeof(vertices[0]) << std::endl;
+		glBufferData(GL_ARRAY_BUFFER, /* Change this back to sizeof(GLfloat*) */32, paddle1Vertices, GL_STATIC_DRAW);
+		glEnableVertexAttribArray(paddle1PosAttrib);
+		glVertexAttribPointer(paddle1PosAttrib, 2, GL_FLOAT, GL_FALSE, 0, 0);
+		glUseProgram(paddle1Program);
+		glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+		glDisableVertexAttribArray(paddle1PosAttrib);
+
+		// Player 2 Paddle
+		glBindVertexArray(paddle2ID);
+		glBindBuffer(GL_ARRAY_BUFFER, paddle2Buffer);
+		//std::cout << sizeof(vertices[0]) << std::endl;
+		glBufferData(GL_ARRAY_BUFFER, /* Change this back to sizeof(GLfloat*) */32, paddle2Vertices, GL_STATIC_DRAW);
+		glEnableVertexAttribArray(paddle2PosAttrib);
+		glVertexAttribPointer(paddle2PosAttrib, 2, GL_FLOAT, GL_FALSE, 0, 0);
+		glUseProgram(paddle2Program);
+		glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+		glDisableVertexAttribArray(paddle2PosAttrib);
 
 		/////////////////////////////////////////////////////////////
 		// End Paddle Data
@@ -129,6 +188,7 @@ int main(void)
 		/////////////////////////////////////////////////////////////
 		// End Ball Data
 
+		handleKeyEvent();
 
 		// Swap buffers
 		glfwSwapBuffers(window);
@@ -143,9 +203,12 @@ int main(void)
 		glfwWindowShouldClose(window) == 0);
 
 	// Cleanup VBO
-	glDeleteBuffers(1, &paddleBuffer);
+	glDeleteBuffers(1, &paddle1Buffer);
+	glDeleteBuffers(1, &paddle2Buffer);
 	glDeleteVertexArrays(1, &paddle1ID);
+	glDeleteVertexArrays(1, &paddle2ID);
 	glDeleteProgram(paddle1Program);
+	glDeleteProgram(paddle2Program);
 
 	// Close OpenGL window and terminate GLFW
 	glfwTerminate();
