@@ -228,6 +228,7 @@ int main(void)
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	//Font loading (gotta do in init stages, cannot modify between new_frame and end_frame
+	ImGui::CreateContext();
 	ImGuiIO & io = ImGui::GetIO();
 	ImFont* ButtonFont = io.Fonts->AddFontFromFileTTF("InconReg.ttf", 25);
 	ImFont* TitleFont = io.Fonts->AddFontFromFileTTF("TitleFont.ttf", 60);
@@ -256,7 +257,7 @@ int main(void)
 	}
 	else if (state == 0) {
 		//begin IMGUI init
-		ImGui::CreateContext();
+	//	ImGui::CreateContext();
 		ImGui::StyleColorsDark();
 		ImGui::SetNextWindowContentSize(ImVec2(200, 200));
 		ImGui_ImplGlfw_InitForOpenGL(window, true);

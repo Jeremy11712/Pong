@@ -85,7 +85,7 @@
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir)\packages\ImGUI\obj;$(SolutionDir)\packages\freetype\objs\Win32\Debug;$(SolutionDir)\packages\glfw3;$(SolutionDir)\packages\glew32</AdditionalLibraryDirectories>
-      <AdditionalDependencies>freetype.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;glfw3.lib;glfw3dll.lib;opengl32.lib;glu32.lib;glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>freetype.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;opengl32.lib;glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -132,6 +132,16 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Ball.h" />
+    <ClInclude Include="glew.h" />
+    <ClInclude Include="glfw3.h" />
+    <ClInclude Include="imconfig.h" />
+    <ClInclude Include="imgui.h" />
+    <ClInclude Include="imgui_impl_glfw.h" />
+    <ClInclude Include="imgui_impl_opengl3.h" />
+    <ClInclude Include="imgui_internal.h" />
+    <ClInclude Include="imstb_rectpack.h" />
+    <ClInclude Include="imstb_textedit.h" />
+    <ClInclude Include="imstb_truetype.h" />
     <ClInclude Include="Paddle.h" />
     <ClInclude Include="shader.hpp" />
     <ClInclude Include="shader_s.h" />
@@ -140,6 +150,11 @@
   <ItemGroup>
     <ClCompile Include="Ball.cpp" />
     <ClCompile Include="GameWindow.cpp" />
+    <ClCompile Include="imgui.cpp" />
+    <ClCompile Include="imgui_draw.cpp" />
+    <ClCompile Include="imgui_impl_glfw.cpp" />
+    <ClCompile Include="imgui_impl_opengl3.cpp" />
+    <ClCompile Include="imgui_widgets.cpp" />
     <ClCompile Include="Paddle.cpp" />
     <ClCompile Include="shader.cpp" />
     <ClCompile Include="window.cpp" />
@@ -159,6 +174,7 @@
     <Import Project="..\packages\nupengl.core.0.1.0.1\build\native\nupengl.core.targets" Condition="Exists('..\packages\nupengl.core.0.1.0.1\build\native\nupengl.core.targets')" />
     <Import Project="..\packages\glm.0.9.9.400\build\native\glm.targets" Condition="Exists('..\packages\glm.0.9.9.400\build\native\glm.targets')" />
     <Import Project="..\packages\glew.redist.1.9.0.1\build\native\glew.redist.targets" Condition="Exists('..\packages\glew.redist.1.9.0.1\build\native\glew.redist.targets')" />
+    <Import Project="..\packages\glfw.3.3.0.1\build\native\glfw.targets" Condition="Exists('..\packages\glfw.3.3.0.1\build\native\glfw.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -168,5 +184,6 @@
     <Error Condition="!Exists('..\packages\nupengl.core.0.1.0.1\build\native\nupengl.core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\nupengl.core.0.1.0.1\build\native\nupengl.core.targets'))" />
     <Error Condition="!Exists('..\packages\glm.0.9.9.400\build\native\glm.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\glm.0.9.9.400\build\native\glm.targets'))" />
     <Error Condition="!Exists('..\packages\glew.redist.1.9.0.1\build\native\glew.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\glew.redist.1.9.0.1\build\native\glew.redist.targets'))" />
+    <Error Condition="!Exists('..\packages\glfw.3.3.0.1\build\native\glfw.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\glfw.3.3.0.1\build\native\glfw.targets'))" />
   </Target>
 </Project>
