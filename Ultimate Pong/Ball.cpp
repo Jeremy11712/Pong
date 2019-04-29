@@ -10,6 +10,8 @@
 
 #define PI 3.14159265
 
+Ball::Ball() {}
+
 Ball::Ball(Window* window, Paddle* paddle1, Paddle* paddle2) {
 	this->pos.x = 0.0;
 	this->pos.y = 0.0;
@@ -36,8 +38,6 @@ void Ball::move() {
 	float dy = speed * sin(direction * PI / 180);
 	this->pos.x += dx;
 	this->pos.y += dy;
-
-	printf("%f, %f\n", this->pos.x, this->pos.y);
 
 	if (this->pos.x > 1 - this->radius) {
 		this->pos.x = 1 - this->radius;

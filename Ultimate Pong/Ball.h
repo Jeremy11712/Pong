@@ -24,6 +24,7 @@ private:
 	void updateBuffer();
 
 public:
+	Ball();
 	Ball(Window* window, Paddle* paddle1, Paddle* paddle2);
 	void move();
 	GLfloat* getBufferData();
